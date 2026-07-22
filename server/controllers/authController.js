@@ -48,7 +48,86 @@ catch(err){
 }
 }
 
+const login = async (req,res,next)=>{
+    const { email, password } = req.body;
+    try{
+     const result = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+
+const user = result.rows[0];
+if (!user) {
+  return res.status(404).json({
+    success: false,
+    message: "Invalid email or password",
+  });
+}
+
+const isMatch = await bcrypt.compare(password, user.password);
+if (!isMatch) {
+  return res.status(401).json({
+    success: false,
+    message: "Invalid email or password",
+  });
+}
+
+const token = generateToken(user.id, user.role);
+
+res.status(200).json({
+    success: true,
+    message: "User login successfully",
+    token,
+    user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        role: user.role,
+    },
+    });
+  }
+  catch(err){
+     next(err);
+  }
+};
+
+const getprofile = async (req,res,next)=>{
+    const userId = req.user.id;
+try{ 
+    const result = await pool.query(
+        "SELECT * FROM users WHERE id= $1" ,
+        [userId]
+    );
+   
+    const user=result.rows[0];
+    if (!user) {
+  return res.status(404).json({
+    success: false,
+    message: "Invalid user",
+  });
+}
+res.status(200).json({
+    success: true,
+    message: "Profile fetched successfully",
+    user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        role: user.role,
+    },
+    });
+}
+catch(err){
+next(err)
+}
+};
 
 module.exports = {
   register,
+  login,
+  getprofile,
 };
