@@ -1,6 +1,6 @@
-const pool = require("./config/db");
+const pool = require("../config/db");
 const bcrypt	=require("bcrypt");
-const generateToken = require("./utils/generateToken");
+const generateToken = require("../utils/generateToken");
 
 const register = async (req,res,next)=>{
 const { name, email, password, phone, address } = req.body;
@@ -47,3 +47,8 @@ catch(err){
       next(err);
 }
 }
+
+
+module.exports = {
+  register,
+};
