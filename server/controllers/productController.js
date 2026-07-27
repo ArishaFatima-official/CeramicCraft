@@ -87,7 +87,10 @@ next(err);
 }
 
 const addproduct = async (req,res,next)=>{
-    const { category_id, name,  description, price, stock, images, material, color, dimensions, is_handmade}= req.body;
+    const { category_id, name,  description, price, stock, material, color, dimensions, is_handmade}= req.body;
+    console.log("Body:", req.body);
+   console.log("File:", req.file);
+   const image = req.file ? req.file.path : null
     try{
      const existingcategory = await pool.query(
       "SELECT * FROM categories WHERE id = $1",
@@ -110,7 +113,7 @@ const addproduct = async (req,res,next)=>{
     }
    const result = await pool.query(
    " INSERT INTO products ( category_id, name, description, price, stock, images, material, color, dimensions, is_handmade) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *",
-[category_id,name,description,price,stock,images,material,color,dimensions,is_handmade]);
+[category_id,name,description,price,stock,image,material,color,dimensions,is_handmade]);
      res.status(201).json({
     success: true,
     data: result.rows[0]
@@ -145,10 +148,13 @@ const updateproduct = async (req,res,next)=>{
         message: "product already exists",
       });
     }
+     const image = req.file
+      ? req.file.path
+      : product.rows[0].image;
 
 const result = await pool.query(
     "UPDATE products SET category_id = $1, name = $2, description = $3, price = $4, stock = $5, images = $6, material = $7, color = $8, dimensions = $9, is_handmade = $10 WHERE id = $11 RETURNING *",
-    [ category_id, name, description, price, stock, images, material, color, dimensions, is_handmade, id]);
+    [ category_id, name, description, price, stock, image, material, color, dimensions, is_handmade, id]);
     
     if (result.rows.length === 0) {
             return res.status(404).json({ message: 'product not found' });

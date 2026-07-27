@@ -4,21 +4,21 @@ const productController = require('../controllers/productController');
 const authmiddleware = require('../middleware/auth');
 const authorize = require('../middleware/authorize');
 const validate = require('../middleware/validate');
+const upload = require('../middleware/upload');
 
 router.get("/",authmiddleware,productController.getproduct);
 router.get("/:id",authmiddleware, productController.getproductbyid);
-router.post("/",validate.validate([
+router.post("/",authmiddleware,authorize("admin"), upload.single("image"),validate.validate([
         "category_id",
         "name",
         "description",
         "price",
         "stock",
-        "images",
         "material",
         "color",
         "dimensions",
         "is_handmade"
-    ]),authmiddleware,authorize("admin"),productController.addproduct );
+    ]),productController.addproduct );
 router.put("/:id",authmiddleware,authorize("admin"),productController.updateproduct );
 router.delete("/:id",authmiddleware,authorize("admin"),productController.deleteproduct);
 
