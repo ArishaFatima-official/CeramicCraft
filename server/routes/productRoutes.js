@@ -3,11 +3,22 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const authmiddleware = require('../middleware/auth');
 const authorize = require('../middleware/authorize');
-
+const validate = require('../middleware/validate');
 
 router.get("/",authmiddleware,productController.getproduct);
 router.get("/:id",authmiddleware, productController.getproductbyid);
-router.post("/",authmiddleware,authorize("admin"),productController.addproduct );
+router.post("/",validate.validate([
+        "category_id",
+        "name",
+        "description",
+        "price",
+        "stock",
+        "images",
+        "material",
+        "color",
+        "dimensions",
+        "is_handmade"
+    ]),authmiddleware,authorize("admin"),productController.addproduct );
 router.put("/:id",authmiddleware,authorize("admin"),productController.updateproduct );
 router.delete("/:id",authmiddleware,authorize("admin"),productController.deleteproduct);
 

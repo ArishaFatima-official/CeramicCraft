@@ -3,10 +3,10 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const authmiddleware = require('../middleware/auth');
 const authorize = require('../middleware/authorize');
-router.post("/register",authController.register);
-//POST /api/auth/login
-router.post("/login", authController.login);
-// //GET /api/auth/profile
+const validate = require("../middleware/validate");
+
+router.post("/register",validate.validateRegister, authController.register);
+router.post("/login",validate.validateLogin, authController.login);
  router.get("/profile",authmiddleware, authController.getprofile);
 
  router.get(
