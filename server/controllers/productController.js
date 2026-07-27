@@ -1,21 +1,72 @@
 const pool = require("../config/db");
 
 const getproduct = async (req,res,next)=>{
-try{
-    const result = await pool.query(
-      "SELECT products.*, categories.name AS category_name FROM products join categories ON products.category_id = categories.id ORDER BY products.id "
-    );
 
-res.status(200).json({
-    success: true,
-    data: result.rows
-});
+const {search,category,minPrice,maxPrice,page=1,limit=9,sort} =req.query;
+const currentPage = Number(page);
+const itemsPerPage = Number(limit);
+const min = Number(minPrice);
+const max = Number(maxPrice);
+const offset = (currentPage - 1) * itemsPerPage;
+  try {
+    let query = `
+      SELECT products.*, categories.name AS category_name
+      FROM products
+      JOIN categories
+      ON products.category_id = categories.id
+      WHERE 1=1
+    `;
+    const values = [];
+    // Search
+    if (search) {
+      values.push(`%${search}%`);
+      query += ` AND products.name ILIKE $${values.length}`;
+    }
+    // Category Filter
+    if (category) {
+      values.push(category);
+      query += ` AND products.category_id = $${values.length}`;
+    }
+    // Minimum Price
+    if (minPrice) {
+      values.push(minPrice);
+      query += ` AND products.price >= $${values.length}`;
+    }
+    // Maximum Price
+    if (maxPrice) {
+      values.push(maxPrice);
+      query += ` AND products.price <= $${values.length}`;
+    }
+    // Sorting
+    if (sort === "price_asc") {
+      query += ` ORDER BY products.price ASC`;
+    } else if (sort === "price_desc") {
+      query += ` ORDER BY products.price DESC`;
+    } else if (sort === "newest") {
+      query += ` ORDER BY products.id DESC`;
+    } else {
+      query += ` ORDER BY products.id ASC`;
+    }
+    // Pagination
+    values.push(itemsPerPage);
+    query += ` LIMIT $${values.length}`;
+    values.push(offset);
+    query += ` OFFSET $${values.length}`;
 
-     }
-catch(err){
-next(err);
-}
-}
+    const result = await pool.query(query, values);
+
+    res.status(200).json({
+      success: true,
+      page: currentPage,
+      limit: itemsPerPage,
+      total: result.rowCount,
+      data: result.rows,
+    });
+
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getproductbyid = async (req,res,next)=>{
 const {id}= req.params;
