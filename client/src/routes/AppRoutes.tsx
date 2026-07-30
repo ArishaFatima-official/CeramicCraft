@@ -1,23 +1,23 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; 
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { Login } from "../pages/Login";
+import { Register } from "../pages/Register";
 
 export function AppRoutes() {
 return(
-<BrowserRouter>
+<>
     <Navbar />
     <Routes>
-        <Route path="/" />
-        <Route path="/products" />
-        <Route path="/login" />
-        <Route path="/register" />
-        <Route path="/cart" />
-        <Route path="/checkout" />
-        <Route path="/orders" />
-        <Route path="/profile" />
-    </Routes>
+  <Route path="/" element={<Navigate to="/register" replace />} />
+
+  <Route path="/register" element={<Register />} />
+
+  <Route path="/login" element={<Login />} />
+
+</Routes>
     <Footer />
-</BrowserRouter>
+</>
 )
 }
 

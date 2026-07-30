@@ -1,7 +1,8 @@
 import api from "../api/axios";
 import { CartItem } from "../types/cart";
+import {ApiResponse} from "../types/api";
 
-export const getCart =async ()=>{
+export const getCart =async (): Promise<ApiResponse<CartItem[]>>=>{
 const response= await api.get('/cart/');
 return response.data;
 }

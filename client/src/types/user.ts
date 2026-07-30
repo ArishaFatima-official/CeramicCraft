@@ -6,3 +6,8 @@ export interface User {
   address: string;
   role: "admin" | "customer";
 }
+
+export interface Userpassword {
+  currentpassword: number;
+  newpassword: string;
+}

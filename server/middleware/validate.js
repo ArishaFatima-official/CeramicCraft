@@ -28,7 +28,7 @@ const validate = (requiredFields) => {
 const validateRegister = (req, res, next) => {
   const { name, email, password, phone, address, role } = req.body;
 
-  if (!name || !email || !password || !phone || !address || !role) {
+  if (!name || !email || !password || !phone || !address) {
     return res.status(400).json({
       success: false,
       message: "All fields are required",
