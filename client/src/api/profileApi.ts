@@ -1,14 +1,14 @@
 import api from "./axios";
-import {User,Userpassword } from "../types/user";
+import {User,UpdateProfileData,Userpassword } from "../types/user";
 import {ApiResponse} from "../types/api";
 
 export const getProfile = async ():Promise<ApiResponse<User>> => {
-  const response = await api.get("/profile");
+  const response = await api.get("/profile/");
   return response.data;
 };
 
-export const updateProfile = async (data: User) => {
-  const response = await api.put("/profile", data);
+export const updateProfile = async (data: UpdateProfileData) => {
+  const response = await api.put("/profile/", data);
   return response.data;
 };
 

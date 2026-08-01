@@ -7,7 +7,14 @@ export interface User {
   role: "admin" | "customer";
 }
 
+export interface UpdateProfileData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
 export interface Userpassword {
-  currentpassword: number;
-  newpassword: string;
+  currentPassword: string;
+  newPassword: string;
 }
