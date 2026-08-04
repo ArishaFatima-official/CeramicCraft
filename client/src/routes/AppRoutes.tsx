@@ -6,16 +6,18 @@ import { Register } from "../pages/Register";
 import { Profile} from "../pages/Profile";
 import ProductPage from '../pages/ProductList';
 import ProductDetails from "../pages/ProductDetail";
+import CartPage from '../pages/Cart';
 export function AppRoutes() {
 return(
 <>
     <Navbar />
     <Routes>
   <Route path="/" element={<Navigate to="/register" replace />} />
+   <Route path="/register" element={<Register />} />
+  <Route path="/login" element={<Login />} />
   <Route path="/products" element={<ProductPage />} />
   <Route path="/products/:id" element={<ProductDetails />} />
-  <Route path="/register" element={<Register />} />
-  <Route path="/login" element={<Login />} />
+   <Route path="/cart" element={<CartPage />} />
   <Route path="/profile" element={<Profile />} />
 </Routes>
     <Footer />

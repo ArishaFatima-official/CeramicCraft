@@ -1,13 +1,24 @@
 
 import type { Product } from "../../types/product"
 import { useNavigate } from "react-router-dom";
-
+import {addtoCart} from "../../api/cartApi";
 type Props = {
   product: Product;
 };
 
 const ProductCard = ({ product }: Props) => {
       const navigate = useNavigate();
+    const handleAddToCart = async () => {
+  try {
+    await addtoCart({
+  product_id: product.id,
+  quantity: 1,
+});
+    alert("Product added to cart!");
+  } catch (error) {
+    console.error("Failed to add product to cart", error);
+  }
+};
   return (
     <div className="col-md-6 col-lg-3 mb-4">
       <div className="card h-100 shadow-sm border-0">
@@ -57,6 +68,7 @@ const ProductCard = ({ product }: Props) => {
             <button
               className="btn btn-dark w-50"
               disabled={product.stock === 0}
+              onClick={handleAddToCart}
             >
               {product.stock > 0? "Add to Cart" : "Out of Stock"}
             </button>

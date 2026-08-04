@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const { cartItems } = useCart();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container">
@@ -33,11 +35,20 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/cart">
-                Cart
-              </Link>
-            </li>
+           <li className="nav-item">
+  <Link
+    className="nav-link position-relative"
+    to="/cart"
+  >
+    Cart
+
+    {cartItems.length > 0 && (
+      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {cartItems.length}
+      </span>
+    )}
+  </Link>
+</li>
           </ul>
           {isAuthenticated && (
       <li className="nav-item"><Link className="nav-link" to="/orders">Order History</Link></li>
