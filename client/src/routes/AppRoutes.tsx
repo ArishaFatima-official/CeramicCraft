@@ -7,6 +7,9 @@ import { Profile} from "../pages/Profile";
 import ProductPage from '../pages/ProductList';
 import ProductDetails from "../pages/ProductDetail";
 import CartPage from '../pages/Cart';
+import CheckoutPage from '../pages/Checkout';
+import OrdersPage from '../pages/OrderHistory';
+import OederDetailPage from '../pages/OrderDetailPage';
 export function AppRoutes() {
 return(
 <>
@@ -18,6 +21,9 @@ return(
   <Route path="/products" element={<ProductPage />} />
   <Route path="/products/:id" element={<ProductDetails />} />
    <Route path="/cart" element={<CartPage />} />
+   <Route path="/checkout" element={<CheckoutPage />} />
+    <Route path="/orders" element={<OrdersPage />} />
+     <Route path="/orders/:id" element={<OederDetailPage />} />
   <Route path="/profile" element={<Profile />} />
 </Routes>
     <Footer />

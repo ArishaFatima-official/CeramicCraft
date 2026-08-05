@@ -3,10 +3,8 @@ type Props = {
   shipping: number;
   total: number;
 };
-import {useNavigate} from "react-router-dom";
 
-const CartSummary = ({ subtotal, shipping, total }: Props) => {
-  const  navigate = useNavigate();
+const OrderSummary = ({ subtotal, shipping, total }: Props) => {
   return (
     <div className="card shadow-sm border-0 sticky-top">
       <div className="card-body">
@@ -28,23 +26,9 @@ const CartSummary = ({ subtotal, shipping, total }: Props) => {
           <h5>Total</h5>
           <h5>Rs. {total.toFixed(2)}</h5>
         </div>
-
-        <button className="btn btn-dark w-100 mb-2"
-        onClick={()=>{
-          navigate("/checkout");
-        }}>
-          Proceed to Checkout
-        </button>
-
-        <button className="btn btn-outline-dark w-100"
-         onClick={()=>{
-          navigate("/products");
-        }}>
-          Continue Shopping
-        </button>
       </div>
     </div>
   );
 };
 
-export default CartSummary;
+export default OrderSummary;

@@ -1,10 +1,20 @@
-
+export interface CheckoutData {
+  shipping_address: string;
+  payment_method: string;
+}
 
 export interface Order {
   id: number;
   user_id: number;
-  total_amount: number;
-  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+  total_price: number;
+  status:
+    | "pending"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "cancelled";
+  shipping_address: string;
+  payment_method: string;
   created_at: string;
 }
 
@@ -15,3 +25,4 @@ export interface OrderItem {
   quantity: number;
   price: number;
 }
+

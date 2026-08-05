@@ -49,11 +49,11 @@ const Navbar = () => {
     )}
   </Link>
 </li>
-          </ul>
+          
           {isAuthenticated && (
       <li className="nav-item"><Link className="nav-link" to="/orders">Order History</Link></li>
     )}
-
+</ul>
           <ul className="navbar-nav">
             {isAuthenticated ? (
               <>

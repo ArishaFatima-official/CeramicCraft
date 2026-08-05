@@ -1,21 +1,32 @@
 const pool = require("../config/db");
 
-const getorders = async (req,res,next)=>{
-try{
-  const result= await pool.query(
-    "SELECT   orders.*, order_items.product_id, order_items.quantity, order_items.price FROM orders join order_items ON orders.id = order_items.order_id  ORDER BY orders.id"
-  )
-res.status(200).json({
-    success: true,
-    data: result.rows
-});
+const getorders = async (req, res, next) => {
+  const user_id = req.user.id;
 
-}
-catch(err){
-next(err);
-}
-}
+  try {
+    const result = await pool.query(
+      `SELECT
+          id,
+          user_id,
+          total_price,
+          status,
+          shipping_address,
+          payment_method,
+          created_at
+       FROM orders
+       WHERE user_id = $1
+       ORDER BY created_at DESC`,
+      [user_id]
+    );
 
+    res.status(200).json({
+      success: true,
+      data: result.rows,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getorderbyid = async (req,res,next)=>{
 const {id}= req.params;
