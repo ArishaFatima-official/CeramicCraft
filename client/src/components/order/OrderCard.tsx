@@ -1,12 +1,12 @@
 import type { Order } from "../../types/order";
 import { Link } from "react-router-dom";
 import { formatPrice, capitalize } from "../../utils/helpers";
-
 type Props = {
   order: Order;
 };
 
 const OrderCard = ({ order }: Props) => {
+
   return (
     <div className="card shadow-sm border-0 mb-4">
       <div className="card-body">

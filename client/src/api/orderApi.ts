@@ -16,10 +16,15 @@ const response= await api.post(`/order/`,data);
 return response.data;
 }
 
- export const updateOrder =async (id: number,data :Order)=>{
-const response= await api.put(`/order/${id}`,data);
-return response.data;
-}
+export const updateOrderStatus = async (
+  id: number,
+  status: string
+) => {
+  const response = await api.put(`/order/${id}`, {
+    status,
+  });
+  return response.data;
+};
 export const deleteOrder =async (id: number)=>{
 const response= await api.delete(  `/order/${id}`);
 return response.data;

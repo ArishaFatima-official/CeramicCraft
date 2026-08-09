@@ -10,6 +10,10 @@ import CartPage from '../pages/Cart';
 import CheckoutPage from '../pages/Checkout';
 import OrdersPage from '../pages/OrderHistory';
 import OederDetailPage from '../pages/OrderDetailPage';
+import AdminDashboard from "../pages/admin/AdminDashboard"
+import AddProduct from "../pages/admin/AddProduct";
+import AdminProducts from "../pages/admin/AdminProducts";
+
 export function AppRoutes() {
 return(
 <>
@@ -25,6 +29,9 @@ return(
     <Route path="/orders" element={<OrdersPage />} />
      <Route path="/orders/:id" element={<OederDetailPage />} />
   <Route path="/profile" element={<Profile />} />
+  <Route path="/admin" element={<AdminDashboard />} />
+  <Route path="/admin/products" element={<AdminProducts />}/>
+  <Route path="/admin/products/add"  element={<AddProduct/>}/>
 </Routes>
     <Footer />
 </>
