@@ -1,5 +1,5 @@
 import api from "../api/axios";
-import { Order,CheckoutData } from "../types/order";
+import { CheckoutData } from "../types/order";
 
 export const getOrder =async ()=>{
 const response= await api.get('/order/');
@@ -10,6 +10,11 @@ export const getOrderById =async (id: number)=>{
 const response= await api.get(`/order/${id}`);
 return response.data;
 }
+
+export const getAdminOrders = async () => {
+  const response = await api.get("/order/admin/all");
+  return response.data;
+};
 
 export const addOrder =async (data :CheckoutData)=>{
 const response= await api.post(`/order/`,data);

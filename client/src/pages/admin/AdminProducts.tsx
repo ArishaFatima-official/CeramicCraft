@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  getProducts,
-  deleteProducts,
-} from "../../api/productApi";
+import {getProducts, deleteProducts } from "../../api/productApi";
 import type { Product } from "../../types/product";
-
+import {useNavigate} from "react-router-dom";
 const AdminProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchProducts = async () => {
     try {
@@ -56,9 +54,12 @@ const AdminProducts = () => {
           Products
         </h2>
 
-        <button className="btn btn-dark">
-          + Add Product
-        </button>
+        <button
+  className="btn btn-dark"
+  onClick={() => navigate("/admin/products/add")}
+>
+  + Add Product
+</button>
       </div>
 
       {/* Product Table */}
@@ -156,6 +157,11 @@ const AdminProducts = () => {
 
                           <button
                             className="btn btn-sm btn-outline-dark"
+                            onClick={() =>
+                              navigate(
+                                `/admin/products/edit/${product.id}`
+                              )
+                            }
                           >
                             Edit
                           </button>

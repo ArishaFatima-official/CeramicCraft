@@ -124,11 +124,25 @@ next(err);
   }
 }
 
-const updateproduct = async (req,res,next)=>{
+const updateproduct = async (req, res, next) => {
   const { id } = req.params;
- const { category_id, name,  description, price, stock, images, material, color, dimensions, is_handmade}= req.body;
-   try{
-     const existingcategory = await pool.query(
+
+  const {
+    category_id,
+    name,
+    description,
+    price,
+    stock,
+    images,
+    material,
+    color,
+    dimensions,
+    is_handmade,
+  } = req.body;
+
+  try {
+    // Check category
+    const existingcategory = await pool.query(
       "SELECT * FROM categories WHERE id = $1",
       [category_id]
     );
@@ -139,35 +153,77 @@ const updateproduct = async (req,res,next)=>{
         message: "category not exists",
       });
     }
+
+    // Check product name
     const existingproduct = await pool.query(
-    "SELECT * FROM products WHERE name = $1 AND id != $2;",[name,id]
+      "SELECT * FROM products WHERE name = $1 AND id != $2",
+      [name, id]
     );
+
     if (existingproduct.rows.length > 0) {
       return res.status(400).json({
         success: false,
         message: "product already exists",
       });
     }
-     const image = req.file
-      ? req.file.path
-      : product.rows[0].image;
 
-const result = await pool.query(
-    "UPDATE products SET category_id = $1, name = $2, description = $3, price = $4, stock = $5, images = $6, material = $7, color = $8, dimensions = $9, is_handmade = $10 WHERE id = $11 RETURNING *",
-    [ category_id, name, description, price, stock, image, material, color, dimensions, is_handmade, id]);
-    
-    if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'product not found' });
-        }
-      res.status(200).json({
-    success: true,
-    data: result.rows[0]
-});
-   }
-  catch(err){
-next(err);
+    // Get existing product
+    const product = await pool.query(
+      "SELECT * FROM products WHERE id = $1",
+      [id]
+    );
+
+    if (product.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "product not found",
+      });
+    }
+
+    // Keep old image if no new image is uploaded
+    const image = req.file
+      ? req.file.path
+      : product.rows[0].images;
+
+    // Update product
+    const result = await pool.query(
+      `UPDATE products
+       SET
+         category_id = $1,
+         name = $2,
+         description = $3,
+         price = $4,
+         stock = $5,
+         images = $6,
+         material = $7,
+         color = $8,
+         dimensions = $9,
+         is_handmade = $10
+       WHERE id = $11
+       RETURNING *`,
+      [
+        category_id,
+        name,
+        description,
+        price,
+        stock,
+        image,
+        material,
+        color,
+        dimensions,
+        is_handmade,
+        id,
+      ]
+    );
+
+    res.status(200).json({
+      success: true,
+      data: result.rows[0],
+    });
+  } catch (err) {
+    next(err);
   }
-}
+};
 
 const deleteproduct = async (req,res,next)=>{
       const { id } = req.params;

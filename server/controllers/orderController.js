@@ -46,6 +46,30 @@ next(err);
 }
 }
 
+const getallorders = async (req, res, next) => {
+  try {
+    const result = await pool.query(
+      `SELECT
+          id,
+          user_id,
+          total_price,
+          status,
+          shipping_address,
+          payment_method,
+          created_at
+       FROM orders
+       ORDER BY created_at DESC`
+    );
+
+    res.status(200).json({
+      success: true,
+      data: result.rows,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 const placeorder = async (req, res, next) => {
   const user_id = req.user.id;
@@ -168,6 +192,7 @@ module.exports={
 getorders,
 getorderbyid,
 placeorder,
-updateorderstatus
+updateorderstatus,
+getallorders
   
 };

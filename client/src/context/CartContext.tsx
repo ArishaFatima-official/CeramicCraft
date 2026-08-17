@@ -13,6 +13,7 @@ import {
   updateCart,
   deleteCartItem,
 } from "../api/cartApi";
+import { useAuth } from "./AuthContext";
 
 interface CartContextType {
   cartItems: CartItem[];
@@ -31,10 +32,15 @@ export const CartProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const { isAuthenticated } = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchCart = async () => {
+      if (!isAuthenticated) {
+      setCartItems([]);
+      return;
+    }
     try {
       setLoading(true);
 

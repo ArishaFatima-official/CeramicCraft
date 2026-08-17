@@ -1,5 +1,5 @@
 import api from "../api/axios";
-import { Product,ProductResponse,SearchParams} from "../types/product";
+import {Productupdate,ProductResponse,SearchParams} from "../types/product";
 
 export const getProducts =async (params: SearchParams): Promise<ProductResponse> => {
   const response = await api.get("/products", { params });
@@ -16,7 +16,7 @@ export const addProduct = async (data: FormData) => {
   return response.data;
 };
 
- export const updateProduct =async (id: number,data :Product)=>{
+ export const updateProduct =async (id: number,data :Productupdate)=>{
 const response= await api.put(`/products/${id}`,data);
 return response.data;
 }

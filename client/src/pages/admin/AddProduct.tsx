@@ -69,7 +69,7 @@ const AddProduct = () => {
       );
 
       if (image) {
-        data.append("image", image);
+        data.append("images", image);
       }
 
       await addProduct(data);

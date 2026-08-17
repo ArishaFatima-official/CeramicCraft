@@ -6,6 +6,7 @@ const authorize = require('../middleware/authorize');
 router.use(authmiddleware);
 
 router.get("/", orderController.getorders);
+router.get( "/admin/all", authorize("admin"), orderController.getallorders);
 router.get("/:id",orderController.getorderbyid);
 router.post("/", orderController.placeorder);
 router.put("/:id",authorize('admin'),orderController.updateorderstatus);

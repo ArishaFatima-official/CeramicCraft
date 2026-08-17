@@ -1,41 +1,63 @@
-import {createContext, ReactNode, useContext, useEffect, useState,} from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-interface User {
+type User = {
   id: number;
   name: string;
   email: string;
   role: string;
-}
+};
 
-interface AuthContextType {
+type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
+  loading: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
-}
+};
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
+const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-export const AuthContext = createContext<AuthContextType | null>(null);
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
 
     if (token && savedUser) {
-      setUser(JSON.parse(savedUser));
-      setIsAuthenticated(true);
+      try {
+        const parsedUser = JSON.parse(savedUser);
+
+        setUser(parsedUser);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("Failed to restore authentication:", error);
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
     }
+
+    setLoading(false);
   }, []);
 
   const login = (token: string, user: User) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
+
     setUser(user);
     setIsAuthenticated(true);
   };
@@ -43,6 +65,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+
     setUser(null);
     setIsAuthenticated(false);
   };
@@ -52,6 +75,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       value={{
         user,
         isAuthenticated,
+        loading,
         login,
         logout,
       }}
@@ -65,7 +89,10 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider");
+    throw new Error(
+      "useAuth must be used within AuthProvider"
+    );
   }
+
   return context;
 };

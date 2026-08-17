@@ -20,25 +20,35 @@ const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 
 };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    try {
-      const response = await authApi.login(loginFormData);
+  try {
+    const response = await authApi.login(loginFormData);
 
-      setLoginData({
-        email: "",
-        password: "",
-      });
+    setLoginData({
+      email: "",
+      password: "",
+    });
 
-      login(response.token, response.user);
-         alert("Login successful!");
+    login(response.token, response.user);
+
+    alert("Login successful!");
+
+    // Redirect based on role
+    if (response.user.role === "admin") {
+      navigate("/admin");
+    } else {
       navigate("/");
-    } catch (error: any) {
-  alert(error.response?.data?.message || "Invalid email or password");
-}
-  };
+    }
 
+  } catch (error: any) {
+    alert(
+      error.response?.data?.message ||
+      "Invalid email or password"
+    );
+  }
+};
   return (
     <div className="container py-5">
       <div className="row justify-content-center">

@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getOrder,
-  updateOrderStatus,
-} from "../../api/orderApi";
+import { getAdminOrders, updateOrderStatus,} from "../../api/orderApi";
 import type { Order } from "../../types/order";
 
 const AdminOrders = () => {
@@ -11,7 +8,7 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await getOrder();
+      const response = await getAdminOrders();
       setOrders(response.data);
     } catch (error) {
       console.error("Failed to fetch orders:", error);

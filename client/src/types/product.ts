@@ -1,4 +1,6 @@
-export interface Product {
+
+
+export interface Productupdate {
   id: number;
   category_id: number;
   category_name: string;
@@ -6,15 +8,12 @@ export interface Product {
   description: string;
   price: number;
   stock: number;
-  images: string;
   material: string;
   color: string;
   dimensions: string;
   is_handmade: boolean;
-  created_at?: string;
   updated_at?: string;
 }
-
 export interface Pagination {
   page: number;
   limit: number;
