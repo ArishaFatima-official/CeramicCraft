@@ -1,66 +1,54 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-const AdminNavbar = () => {
+interface AdminNavbarProps {
+  onMenuClick: () => void;
+}
+
+const AdminNavbar = ({
+  onMenuClick,
+}: AdminNavbarProps) => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const getPageTitle = () => {
-    if (location.pathname === "/admin") {
-      return "Dashboard";
-    }
-
-    if (location.pathname.startsWith("/admin/orders")) {
-      return "Orders";
-    }
-
-    if (location.pathname.startsWith("/admin/products/add")) {
-      return "Add Product";
-    }
-
-    if (location.pathname.startsWith("/admin/products/edit")) {
-      return "Edit Product";
-    }
-
-    if (location.pathname.startsWith("/admin/products")) {
-      return "Products";
-    }
-
-    if (location.pathname.startsWith("/admin/categories")) {
-      return "Categories";
-    }
-
-    return "Admin Panel";
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
   return (
-    <nav className="navbar bg-white shadow-sm border-bottom px-4 py-3">
+    <nav className="navbar navbar-dark bg-dark shadow-sm admin-navbar">
+
       <div className="container-fluid">
 
-        <div>
-          <h5 className="fw-bold mb-0">
-            {getPageTitle()}
-          </h5>
+        <div className="d-flex align-items-center">
 
-          <small className="text-muted">
-            Welcome, {user?.name}
-          </small>
+          {/* Mobile menu button */}
+          <button
+            className="btn btn-dark d-lg-none me-2"
+            type="button"
+            onClick={onMenuClick}
+            aria-label="Open sidebar"
+          >
+            ☰
+          </button>
+
+          <span className="navbar-brand fw-bold mb-0">
+            CeramicCraft Admin
+          </span>
+
         </div>
 
-        <button
-          className="btn btn-outline-danger btn-sm"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
+        <div className="d-flex align-items-center gap-3">
+
+          <span className="text-white d-none d-sm-block">
+            Welcome, {user?.name}
+          </span>
+
+          <button
+            className="btn btn-outline-light btn-sm"
+            onClick={logout}
+          >
+            Logout
+          </button>
+
+        </div>
 
       </div>
+
     </nav>
   );
 };

@@ -16,7 +16,7 @@ const dashboard = async (req, res, next) => {
     );
 
     const totalRevenue = await pool.query(
-      "SELECT COALESCE(SUM(total_price),0) AS total_revenue FROM orders WHERE status = 'Delivered'"
+      "SELECT COALESCE(SUM(total_price),0) AS total_revenue FROM orders WHERE status = 'delivered'"
     );
 
     const lowStockProducts = await pool.query(

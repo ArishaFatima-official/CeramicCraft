@@ -94,9 +94,9 @@ export const CartProvider = ({
     }
   };
 
-  useEffect(() => {
-    fetchCart();
-  }, []);
+ useEffect(() => {
+  fetchCart();
+}, [isAuthenticated]);
 
   return (
     <CartContext.Provider

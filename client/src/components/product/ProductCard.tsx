@@ -2,13 +2,19 @@
 import type { Product } from "../../types/product"
 import { useNavigate } from "react-router-dom";
 import {addtoCart} from "../../api/cartApi";
+import { useAuth } from "../../context/AuthContext";
 type Props = {
   product: Product;
 };
 
 const ProductCard = ({ product }: Props) => {
+  const { isAuthenticated } = useAuth();
       const navigate = useNavigate();
     const handleAddToCart = async () => {
+        if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
   try {
     await addtoCart({
   product_id: product.id,

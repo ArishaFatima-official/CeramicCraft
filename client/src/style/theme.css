@@ -1,0 +1,256 @@
+:root {
+  --ceramic-primary: #795548;
+  --ceramic-primary-dark: #5d4037;
+  --ceramic-primary-light: #a1887f;
+
+  --ceramic-bg: #f8f5f2;
+  --ceramic-white: #ffffff;
+  --ceramic-text: #3e2723;
+  --ceramic-border: #d7ccc8;
+}
+
+/* =========================
+   GLOBAL
+========================= */
+
+body {
+  background-color: var(--ceramic-bg);
+  color: var(--ceramic-text);
+}
+
+a {
+  color: var(--ceramic-primary);
+}
+
+a:hover {
+  color: var(--ceramic-primary-dark);
+}
+
+
+/* =========================
+   BROWN BACKGROUNDS
+========================= */
+
+.bg-dark {
+  background-color: var(--ceramic-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--ceramic-primary) !important;
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.text-dark {
+  color: var(--ceramic-text) !important;
+}
+
+.text-primary {
+  color: var(--ceramic-primary) !important;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-primary {
+  background-color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--ceramic-primary-dark);
+  border-color: var(--ceramic-primary-dark);
+}
+
+.btn-dark {
+  background-color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+}
+
+.btn-dark:hover {
+  background-color: var(--ceramic-primary-dark);
+  border-color: var(--ceramic-primary-dark);
+}
+
+
+/* =========================
+   OUTLINE BUTTONS
+========================= */
+
+.btn-outline-primary {
+  color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+  color: white;
+}
+
+.btn-outline-dark {
+  color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+  color: white;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-dark {
+  background-color: var(--ceramic-primary) !important;
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link {
+  color: white;
+}
+
+.navbar-dark .nav-link:hover {
+  color: #f5e9e2;
+}
+
+
+/* =========================
+   NAV PILLS
+========================= */
+
+.nav-pills .nav-link.active {
+  background-color: var(--ceramic-primary);
+}
+
+.nav-pills .nav-link {
+  color: var(--ceramic-primary);
+}
+
+
+/* =========================
+   BADGES
+========================= */
+
+.badge.bg-dark {
+  background-color: var(--ceramic-primary) !important;
+}
+
+.badge.bg-primary {
+  background-color: var(--ceramic-primary) !important;
+}
+
+
+/* =========================
+   FORMS
+========================= */
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ceramic-primary-light);
+  box-shadow: 0 0 0 0.2rem rgba(121, 85, 72, 0.2);
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  border-color: var(--ceramic-border);
+}
+
+.card-header {
+  background-color: var(--ceramic-primary);
+  color: white;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-primary {
+  --bs-table-bg: #eee5e0;
+  --bs-table-color: var(--ceramic-text);
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+.nav-link:hover {
+  color: var(--ceramic-primary);
+}
+
+
+/* =========================
+   ADMIN SIDEBAR
+========================= */
+
+.admin-sidebar {
+  background-color: var(--ceramic-primary) !important;
+}
+
+.admin-sidebar .nav-link:hover {
+  background-color: var(--ceramic-primary-dark);
+}
+
+.admin-sidebar .nav-link.active {
+  background-color: white;
+  color: var(--ceramic-primary) !important;
+}
+
+
+/* =========================
+   ADMIN NAVBAR
+========================= */
+
+.admin-navbar {
+  background-color: var(--ceramic-primary) !important;
+}
+
+
+/* =========================
+   DROPDOWNS
+========================= */
+
+.dropdown-item:hover {
+  background-color: #eee5e0;
+  color: var(--ceramic-primary);
+}
+
+
+/* =========================
+   ALERTS
+========================= */
+
+.alert-primary {
+  background-color: #eee5e0;
+  border-color: var(--ceramic-primary-light);
+  color: var(--ceramic-text);
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.page-link {
+  color: var(--ceramic-primary);
+}
+
+.page-item.active .page-link {
+  background-color: var(--ceramic-primary);
+  border-color: var(--ceramic-primary);
+}

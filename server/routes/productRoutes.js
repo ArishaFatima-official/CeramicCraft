@@ -6,8 +6,8 @@ const authorize = require('../middleware/authorize');
 const validate = require('../middleware/validate');
 const upload = require('../middleware/upload');
 
-router.get("/",authmiddleware,productController.getproduct);
-router.get("/:id",authmiddleware, productController.getproductbyid);
+router.get("/",productController.getproduct);
+router.get("/:id", productController.getproductbyid);
 router.post("/",authmiddleware,authorize("admin"), upload.single("image"),validate.validate([
         "category_id",
         "name",

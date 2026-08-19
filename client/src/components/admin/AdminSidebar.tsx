@@ -1,22 +1,44 @@
 import { NavLink } from "react-router-dom";
 
-const AdminSidebar = () => {
+interface AdminSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const AdminSidebar = ({
+  isOpen,
+  onClose,
+}: AdminSidebarProps) => {
   return (
     <aside
-      className="bg-dark text-white shadow-sm min-vh-100"
-      style={{ width: "250px" }}
+      className={`admin-sidebar bg-dark text-white shadow-sm ${
+        isOpen ? "show" : ""
+      }`}
     >
+
       <div className="p-4">
 
-        {/* Brand */}
-        <div className="mb-4">
-          <h4 className="fw-bold mb-1">
-            CeramicCraft
-          </h4>
+        {/* Header */}
+        <div className="sidebar-header mb-4">
 
-          <small className="text-secondary">
-            Admin Panel
-          </small>
+          <div>
+            <h4 className="fw-bold mb-1">
+              CeramicCraft
+            </h4>
+
+            <small className="text-secondary">
+              Admin Panel
+            </small>
+          </div>
+
+          {/* Close button - mobile only */}
+          <button
+            type="button"
+            className="btn btn-close btn-close-white d-lg-none"
+            onClick={onClose}
+            aria-label="Close sidebar"
+          ></button>
+
         </div>
 
         {/* Navigation */}
@@ -26,11 +48,10 @@ const AdminSidebar = () => {
             <NavLink
               to="/admin"
               end
+              onClick={onClose}
               className={({ isActive }) =>
                 `nav-link ${
-                  isActive
-                    ? "active"
-                    : "text-white"
+                  isActive ? "active" : "text-white"
                 }`
               }
             >
@@ -41,11 +62,10 @@ const AdminSidebar = () => {
           <li className="nav-item">
             <NavLink
               to="/admin/orders"
+              onClick={onClose}
               className={({ isActive }) =>
                 `nav-link ${
-                  isActive
-                    ? "active"
-                    : "text-white"
+                  isActive ? "active" : "text-white"
                 }`
               }
             >
@@ -56,11 +76,10 @@ const AdminSidebar = () => {
           <li className="nav-item">
             <NavLink
               to="/admin/products"
+              onClick={onClose}
               className={({ isActive }) =>
                 `nav-link ${
-                  isActive
-                    ? "active"
-                    : "text-white"
+                  isActive ? "active" : "text-white"
                 }`
               }
             >
@@ -71,11 +90,10 @@ const AdminSidebar = () => {
           <li className="nav-item">
             <NavLink
               to="/admin/products/add"
+              onClick={onClose}
               className={({ isActive }) =>
                 `nav-link ${
-                  isActive
-                    ? "active"
-                    : "text-white"
+                  isActive ? "active" : "text-white"
                 }`
               }
             >
@@ -86,11 +104,10 @@ const AdminSidebar = () => {
           <li className="nav-item">
             <NavLink
               to="/admin/categories"
+              onClick={onClose}
               className={({ isActive }) =>
                 `nav-link ${
-                  isActive
-                    ? "active"
-                    : "text-white"
+                  isActive ? "active" : "text-white"
                 }`
               }
             >
@@ -101,6 +118,7 @@ const AdminSidebar = () => {
         </ul>
 
       </div>
+
     </aside>
   );
 };
