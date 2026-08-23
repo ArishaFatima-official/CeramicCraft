@@ -88,8 +88,6 @@ next(err);
 
 const addproduct = async (req,res,next)=>{
     const { category_id, name,  description, price, stock, material, color, dimensions, is_handmade}= req.body;
-    console.log("Body:", req.body);
-   console.log("File:", req.file);
    const image = req.file ? req.file.path : null
     try{
      const existingcategory = await pool.query(
