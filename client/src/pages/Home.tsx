@@ -81,16 +81,6 @@ const Home = () => {
                   alt="Handmade ceramics"
                   className="hero-image"
                 />
-
-                <div className="hero-floating-card">
-                  <span>✦</span>
-
-                  <div>
-                    <strong>Handcrafted</strong>
-                    <small>Made with love</small>
-                  </div>
-                </div>
-
               </div>
             </div>
 
